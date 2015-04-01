@@ -38,6 +38,15 @@ router.get('/user', function(req, res) {
     });
 });
 
+router.get('/event', function(req, res) {
+    Event.find(function(err, events) {
+        if (err)
+            res.send(err);
+        
+        res.json(events);
+    });
+});
+
 router.post('/user', function(req, res) {
     var user = new User({
                 name: req.body.name,
