@@ -26,7 +26,9 @@ var EventSchema = new mongoose.Schema({
         type: String
     },
     datetime: {
-        type: Date,
-        required: true
+        type: Date
+        //required: true
     }
 });
+
+module.exports = mongoose.model('Event', EventSchema);

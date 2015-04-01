@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var User = require('./models/user');
+var Event = require('./models/event');
 
 mongoose.connect('mongodb://192.168.0.22:27017/nettunoHackersdb');
 
@@ -49,6 +50,27 @@ router.post('/user', function(req, res) {
             });
     
             user.save(function(err) {
+            if (err)
+                res.send(err);
+        
+                res.json({ message: 'User successfully created.'});
+            }) 
+});
+
+router.post('/event', function(req, res) {
+    console.log("prova");
+    var event = new Event({
+                name: req.body.name,
+                type: req.body.type,
+                description: req.body.description,
+                image: req.body.image,
+                place: req.body.place,
+                price: req.body.price,
+                link: req.body.link,
+                datetime: req.body.datetime
+            });
+    
+            event.save(function(err) {
             if (err)
                 res.send(err);
         
