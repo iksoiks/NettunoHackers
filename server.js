@@ -11,17 +11,34 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-var port = 8080;
+var port = 3000;
 
 var router = express.Router();
+
+router.use(function(req, res, next) {
+
+    // log each request to the console
+    console.log(req.method, req.url);
+
+    // continue doing what we were doing and go to the route
+    next(); 
+});
 
 router.get('/', function(req, res, next) {
     res.json({message: 'Olè'});
 })
 
-router.route('/user')
-    .post(function(req, res) {
-            var user = new User({
+router.get('/user', function(req, res) {
+    User.find(function(err, users) {
+        if (err)
+            res.send(err);
+        
+        res.json(users);
+    });
+});
+
+router.post('/user', function(req, res) {
+    var user = new User({
                 name: req.body.name,
                 surname: req.body.surname,
                 password: req.body.password,
@@ -36,9 +53,9 @@ router.route('/user')
                 res.send(err);
         
                 res.json({ message: 'User successfully created.'});
-            })
+            }) 
 });
-    
+
 app.use('/api', router);
 
 app.listen(port);
