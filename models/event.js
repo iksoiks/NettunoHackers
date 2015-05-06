@@ -29,10 +29,20 @@ var EventSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    to: { // TODO from < to
+    to: {
         type: Date,
         required: true
     }
 });
 
-module.exports = mongoose.model('Event', EventSchema);
+EventSchema.pre('validate', function (next) {
+    if (this.from.getTime() < this.to.getTime()) {
+        next();
+    } else {
+        next(new Error('End Date (`from`) must be greater than Start Date (`to`)'));
+    }
+});
+
+var Event = mongoose.model('Event', EventSchema);
+
+module.exports = Event;

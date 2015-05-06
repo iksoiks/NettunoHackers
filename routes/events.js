@@ -26,10 +26,11 @@ router.post('/', function (req, res, next) {
     });
 
     event.save(function (err) {
-        if (err)
-            return next(err);
+        if (err) {
+            return res.json({error: err.message});
+        }
 
-        res.json({message: 'User successfully created.'});
+        res.json({message: 'Event successfully created.'});
     });
 });
 
