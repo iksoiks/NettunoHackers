@@ -26,13 +26,18 @@ router.post('/', function (req, res, next) {
     });
 
     event.save(function (err) {
-        if (err) {
-            return res.json({error: err.message});
-        }
+        if (err) return res.json({error: err.message});
 
         res.json({message: 'Event successfully created.'});
     });
 });
 
+router.get('/:id', function (req, res, next) {
+    Event.findOne({'id': req.param.id}, function (err, events) {
+        if (err)
+            return next(err);
+        res.json(events);
+    });
+});
 
 module.exports = router;

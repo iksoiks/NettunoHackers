@@ -18,8 +18,7 @@ router.post('/', function (req, res, next) {
     });
 
     category.save(function (err) {
-        if (err)
-            return next(err);
+        if (err) return res.json({error: err.message});
 
         res.json({message: 'Category successfully created.'});
     })
