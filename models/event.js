@@ -6,7 +6,7 @@ var EventSchema = new mongoose.Schema({
         required: true
     },
     type: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required: true
     },
     description: {
@@ -15,7 +15,7 @@ var EventSchema = new mongoose.Schema({
     image: {
         type: String
     },
-    place: {
+    location: {
         type: String,
         required: true
     },
@@ -25,9 +25,13 @@ var EventSchema = new mongoose.Schema({
     link: {
         type: String
     },
-    datetime: {
-        type: Date
-        //required: true
+    from: {
+        type: Date,
+        required: true
+    },
+    to: { // TODO from < to
+        type: Date,
+        required: true
     }
 });
 
